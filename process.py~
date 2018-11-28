@@ -1,0 +1,38 @@
+#! /usr/bin/env python
+
+import numpy as np
+import os
+import glob
+import argparse
+
+
+gt_path = ""
+pred_path = ""
+visualize = False
+save = False
+
+parser = argparse.ArgumentParser(description="Process Images Post Deep")
+parser.add_argument('-g', '--gt_path', default=gt_path)
+parser.add_argument('-p', '--pred_path', default=pred_path)
+parser.add_argument('-v', '--visualize', action='store_true')
+parser.add_argument('-s', '--save', action='store_true')
+args = parser.parse_args()
+
+gt_path = str(args.gt_path)
+pred_path = str(args.pred_path)
+visualize = args.visualize
+save = args.save
+
+if visualize:
+    import matplotlib.pyplot as plt
+    plt.close('all')
+
+
+list_gt = glob.glob(gt_path)
+list_pred = glob.glob(pred_path)
+
+
+assert len(list_gt) == len(list_pred)
+
+for gt, pred in zip(list_gt, list_pred):
+    print("NEW" + gt + " " + pred)

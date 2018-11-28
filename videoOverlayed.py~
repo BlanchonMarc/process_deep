@@ -1,0 +1,36 @@
+#! /usr/bin/env python3
+
+import numpy as np
+import os
+import glob
+import argparse
+import re
+import matplotlib.pyplot as plt
+
+
+def sorted_alphanumeric(data):
+    def convert(text): return int(text) if text.isdigit() else text.lower()
+
+    def alphanum_key(key): return [convert(c)
+                                   for c in re.split('([0-9]+)', key)]
+    return sorted(data, key=alphanum_key)
+
+
+imgray = ""
+imcolor = ""
+
+parser = argparse.ArgumentParser(description="Process Images Post Deep")
+parser.add_argument('-g', '--imgray', default=imgray)
+parser.add_argument('-c', '--imcolor', default=imcolor)
+args = parser.parse_args()
+
+imgray = str(args.imgray)
+imcolor = str(args.imcolor)
+
+list_gray = os.listdir(imgray)
+list_color = os.listdir(imcolor)
+
+# assert len(list_gray) == len(list_color)
+
+for gray, color in zip(sorted_alphanumeric(list_gray), sorted_alphanumeric(list_color)):
+    print(gray, color)
